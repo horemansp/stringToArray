@@ -1,0 +1,39 @@
+String theMsg = "this,is,a,comma,separated,string";
+String stringArray[20]; //modify as desired
+
+void setup()
+{
+  Serial.begin(9600);
+  stringToArray(theMsg,",");
+}
+
+void stringToArray(String theMsg, String delimiter){
+    bool loop = true;
+  	int index = 0;
+    int endChar;
+    String theSubMsg = "";
+    String leftMsg = "";
+    leftMsg = theMsg;
+    //Serial.println(theMsg);
+    do {
+      if(leftMsg.indexOf(delimiter) > -1){
+      	endChar = leftMsg.indexOf(delimiter);
+      	theSubMsg = leftMsg.substring(0,endChar);
+        leftMsg = leftMsg.substring(endChar+1,leftMsg.length());
+      } else {
+        theSubMsg = leftMsg;
+        loop = false;
+      }
+      
+      //Serial.println(leftMsg);
+      stringArray[index] = theSubMsg;
+      index++;	
+		
+    } while(loop);
+  
+	Serial.println("String handling finished");
+  //print array 
+  for(int i=0;i<20;i++){
+  	Serial.print(i);Serial.println("="+stringArray[i]);
+  }
+}
